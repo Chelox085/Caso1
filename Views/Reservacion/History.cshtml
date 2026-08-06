@@ -1,0 +1,59 @@
+@model IEnumerable<Caso1.Models.Reservacion>
+@{
+    ViewData["Title"] = "Historial Administrativo";
+}
+<div class="mb-4 d-flex justify-content-between align-items-center">
+    <div>
+        <h2 class="fw-bold text-dark mb-1">Módulo de Control Administrativo</h2>
+        <p class="text-muted mb-0"><i class="fa-solid fa-folder-open me-2"></i>@ViewData["FiltroActivo"]</p>
+    </div>
+    <a asp-controller="Habitaciones" asp-action="Index" class="btn btn-outline-secondary"><i class="fa-solid fa-arrow-left me-1"></i>Volver a Habitaciones</a>
+</div>
+<div class="card shadow-sm border-0 bg-white p-3">
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle mb-0 text-center small">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID Reserva</th>
+                    <th>Huésped</th>
+                    <th>Identificación</th>
+                    <th>Teléfono</th>
+                    <th>Correo</th>
+                    <th>Nacimiento</th>
+                    <th>Personas</th>
+                    <th>Entrada</th>
+                    <th>Salida</th>
+                    <th>Monto Recaudado</th>
+                    <th>Fecha Registro</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="11" class="text-center py-4 text-muted">No se registran reservaciones bajo este criterio de búsqueda.</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold text-primary">#@item.Id</td>
+                            <td class="text-start">@item.NombreDeLaPersona</td>
+                            <td>@item.Identificacion</td>
+                            <td>@item.Telefono</td>
+                            <td class="text-lowercase">@item.Correo</td>
+                            <td>@item.FechaNacimiento.ToString("dd/MM/yyyy")</td>
+                            <td>@item.CantidadDePersonas</td>
+                            <td class="table-success fw-semibold">@item.FechaInicioReserva.ToString("dd/MM/yyyy")</td>
+                            <td class="table-danger fw-semibold">@item.FechaFinReserva.ToString("dd/MM/yyyy")</td>
+                            <td class="fw-bold text-success">@item.MontoTotal.ToString("C")</td>
+                            <td class="text-muted text-xs">@item.FechaDeRegistro.ToString("g")</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

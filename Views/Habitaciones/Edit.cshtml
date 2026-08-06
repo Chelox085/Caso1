@@ -1,0 +1,100 @@
+@model Caso1.Models.Habitacion
+@{
+    ViewData["Title"] = "Editar Habitación";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fa-solid fa-pen-to-square me-2 text-warning"></i>Modificar Habitación</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary"><i class="fa-solid fa-arrow-left me-1"></i>Volver a la Lista</a>
+</div>
+
+<div class="card shadow-sm border-0 border-top border-warning border-4">
+    <div class="card-body p-4">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            
+            <input type="hidden" asp-for="Id" />
+
+            <h5 class="text-muted mb-3 border-bottom pb-2">Datos Bloqueados (No Editables)</h5>
+            <div class="row g-3 mb-4 bg-light p-3 rounded">
+                <div class="col-md-3">
+                    <label class="form-label text-muted">Código</label>
+                    <input asp-for="CodigoDeHabitacion" class="form-control" readonly />
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label text-muted">Nombre</label>
+                    <input asp-for="NombreDeHabitacion" class="form-control" readonly />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label text-muted">Cant. Baños</label>
+                    <input asp-for="CantidadDeBanos" class="form-control" readonly />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label text-muted">Ubicación</label>
+                    <input asp-for="Ubicacion" class="form-control" readonly />
+                </div>
+            </div>
+
+            <h5 class="mb-3 border-bottom pb-2">Datos Editables</h5>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label asp-for="TipoDeHabitacion" class="form-label fw-bold">Tipo de Habitación</label>
+                    <select asp-for="TipoDeHabitacion" class="form-select">
+                        <option value="1">1 - Junior</option>
+                        <option value="2">2 - Superior</option>
+                        <option value="3">3 - Suite</option>
+                    </select>
+                    <span asp-validation-for="TipoDeHabitacion" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="CantidadDeHuespedesPermitidos" class="form-label fw-bold">Máx. Huéspedes</label>
+                    <input asp-for="CantidadDeHuespedesPermitidos" class="form-control" type="number" min="1" />
+                    <span asp-validation-for="CantidadDeHuespedesPermitidos" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="CantidadDeCamas" class="form-label fw-bold">Cant. Camas</label>
+                    <input asp-for="CantidadDeCamas" class="form-control" type="number" min="1" />
+                    <span asp-validation-for="CantidadDeCamas" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="EncargadoDeLimpieza" class="form-label fw-bold">Responsable de Limpieza</label>
+                    <input asp-for="EncargadoDeLimpieza" class="form-control" />
+                    <span asp-validation-for="EncargadoDeLimpieza" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="CostoDeLimpieza" class="form-label fw-bold">Costo Limpieza</label>
+                    <div class="input-group">
+                        <span class="input-group-text">₡</span>
+                        <input asp-for="CostoDeLimpieza" class="form-control" type="number" step="0.01" min="0.01" />
+                    </div>
+                    <span asp-validation-for="CostoDeLimpieza" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="CostoDeReserva" class="form-label fw-bold">Costo por Noche</label>
+                    <div class="input-group">
+                        <span class="input-group-text">₡</span>
+                        <input asp-for="CostoDeReserva" class="form-control" type="number" step="0.01" min="0.01" />
+                    </div>
+                    <span asp-validation-for="CostoDeReserva" class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mt-4">
+                    <div class="form-check form-switch fs-5">
+                        <input asp-for="Estado" class="form-check-input" type="checkbox" id="estadoSwitchEdit">
+                        <label class="form-check-label fw-bold" for="estadoSwitchEdit">Estado Activo</label>
+                    </div>
+                    <small class="text-muted">Si inactiva la habitación, no aparecerá en nuevas búsquedas, pero las reservas actuales se mantendrán.</small>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-top d-flex justify-content-end">
+                <button type="submit" class="btn btn-warning btn-lg px-5 fw-bold text-dark"><i class="fa-solid fa-save me-2"></i>Actualizar Habitación</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,109 @@
+@model Caso1.ViewModels.FormularioReservaViewModel
+@{
+    ViewData["Title"] = "Completar Reserva";
+}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Completar Reservación</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary">Volver a Buscar</a>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-white fw-bold">
+                Datos del Huésped Principal
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" method="post">
+                    <input type="hidden" asp-for="NuevaReserva.IdHabitacion" />
+                    <input type="hidden" asp-for="NuevaReserva.FechaInicioReserva" />
+                    <input type="hidden" asp-for="NuevaReserva.FechaFinReserva" />
+                    <input type="hidden" asp-for="NuevaReserva.MontoTotal" />
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label asp-for="NuevaReserva.NombreDeLaPersona" class="form-label">Nombre Completo</label>
+                            <input asp-for="NuevaReserva.NombreDeLaPersona" class="form-control" />
+                            <span asp-validation-for="NuevaReserva.NombreDeLaPersona" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="NuevaReserva.Identificacion" class="form-label">Identificación (Cédula/Pasaporte)</label>
+                            <input asp-for="NuevaReserva.Identificacion" class="form-control" />
+                            <span asp-validation-for="NuevaReserva.Identificacion" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="NuevaReserva.Correo" class="form-label">Correo Electrónico</label>
+                            <input asp-for="NuevaReserva.Correo" type="email" class="form-control" />
+                            <span asp-validation-for="NuevaReserva.Correo" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="NuevaReserva.Telefono" class="form-label">Teléfono</label>
+                            <input asp-for="NuevaReserva.Telefono" class="form-control" />
+                            <span asp-validation-for="NuevaReserva.Telefono" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="NuevaReserva.FechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                            <input asp-for="NuevaReserva.FechaNacimiento"
+                                   type="date"
+                                   class="form-control"
+                                   min="1920-01-01"
+                                   max="@DateTime.Today.ToString("yyyy-MM-dd")"
+                                   value="@(Model.NuevaReserva.FechaNacimiento == default ? "" : Model.NuevaReserva.FechaNacimiento.ToString("yyyy-MM-dd"))" />
+                            <span asp-validation-for="NuevaReserva.FechaNacimiento" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="NuevaReserva.CantidadDePersonas" class="form-label">Cantidad de Personas</label>
+                            <input asp-for="NuevaReserva.CantidadDePersonas" type="number" min="1" max="@Model.HabitacionSeleccionada.CantidadDeHuespedesPermitidos" class="form-control" value="1" />
+                            <span asp-validation-for="NuevaReserva.CantidadDePersonas" class="text-danger"></span>
+                            <small class="text-muted">Máximo permitido: @Model.HabitacionSeleccionada.CantidadDeHuespedesPermitidos personas</small>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="NuevaReserva.Direccion" class="form-label">Dirección Completa</label>
+                            <textarea asp-for="NuevaReserva.Direccion" class="form-control" rows="2"></textarea>
+                            <span asp-validation-for="NuevaReserva.Direccion" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-top text-end">
+                        <button type="submit" class="btn btn-primary btn-lg px-5">Confirmar y Pagar @Model.NuevaReserva.MontoTotal.ToString("C")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm bg-light">
+            <div class="card-header bg-secondary text-white fw-bold">
+                Resumen de su Reserva
+            </div>
+            <div class="card-body">
+                <h5 class="mb-3 border-bottom pb-2">@Model.HabitacionSeleccionada.NombreDeHabitacion</h5>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Llegada:</span>
+                    <strong>@Model.NuevaReserva.FechaInicioReserva.ToString("dd/MMM/yyyy")</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Salida:</span>
+                    <strong>@Model.NuevaReserva.FechaFinReserva.ToString("dd/MMM/yyyy")</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
+                    <span class="text-muted">Duración:</span>
+                    <strong>@Model.CantidadNoches noches</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Costo por Noche:</span>
+                    <span>@Model.HabitacionSeleccionada.CostoDeReserva.ToString("C")</span>
+                </div>
+                <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
+                    <span class="text-muted">Tarifa de Limpieza:</span>
+                    <span>@Model.HabitacionSeleccionada.CostoDeLimpieza.ToString("C")</span>
+                </div>
+                <div class="d-flex justify-content-between mt-3">
+                    <span class="fs-5">Total a Pagar:</span>
+                    <span class="fs-4 fw-bold text-success">@Model.NuevaReserva.MontoTotal.ToString("C")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

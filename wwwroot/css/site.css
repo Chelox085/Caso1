@@ -1,0 +1,303 @@
+:root {
+  --color-hueso: #F7F3EE;
+  --color-hueso-card: #FFFFFF;
+  --color-morado: #9D00FF;
+  --color-morado-hover: #8400D6;
+  --color-morado-oscuro: #1A0033;
+  --color-morado-oscuro-soft: #2A1145;
+  --color-texto: #2B2530;
+  --color-texto-muted: #6B6470;
+  --color-borde: #E7E0D8;
+}
+ 
+body {
+  background-color: var(--color-hueso);
+  color: var(--color-texto);
+}
+ 
+a {
+  color: var(--color-morado);
+}
+ 
+a:hover {
+  color: var(--color-morado-hover);
+}
+ 
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+ 
+.navbar.bg-dark {
+  background-color: var(--color-morado-oscuro) !important;
+}
+ 
+.navbar .nav-link {
+  color: rgba(255, 255, 255, 0.75);
+}
+ 
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+  color: #ffffff;
+}
+ 
+.btn-primary {
+  color: #fff;
+  background-color: var(--color-morado);
+  border-color: var(--color-morado);
+}
+ 
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--color-morado-hover);
+  border-color: var(--color-morado-hover);
+}
+ 
+.btn-outline-primary {
+  color: var(--color-morado);
+  border-color: var(--color-morado);
+}
+ 
+.btn-outline-primary:hover {
+  background-color: var(--color-morado);
+  border-color: var(--color-morado);
+  color: #fff;
+}
+ 
+.text-primary {
+  color: var(--color-morado) !important;
+}
+ 
+.bg-light.text-primary {
+  background-color: rgba(157, 0, 255, 0.1) !important;
+  color: var(--color-morado) !important;
+}
+ 
+.border-primary {
+  border-color: var(--color-morado) !important;
+}
+ 
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: var(--color-morado);
+  border-color: var(--color-morado);
+}
+ 
+
+.card,
+.table-card,
+.bg-white {
+  background-color: var(--color-hueso-card) !important;
+}
+ 
+.card {
+  border-color: var(--color-borde);
+}
+ 
+.table-light {
+  --bs-table-bg: #F1ECE3;
+}
+ 
+.text-muted {
+  color: var(--color-texto-muted) !important;
+}
+
+.hero-panel {
+  background: linear-gradient(135deg, var(--color-morado-oscuro) 0%, var(--color-morado-oscuro-soft) 100%);
+  color: #fff;
+  border-radius: 0.75rem;
+}
+ 
+.hero-panel .lead,
+.hero-panel p {
+  color: rgba(255, 255, 255, 0.85);
+}
+ 
+.hero-gradient {
+  display: none;
+}
+ 
+
+.border-top {
+  border-top: 1px solid var(--color-borde);
+}
+.border-bottom {
+  border-bottom: 1px solid var(--color-borde);
+}
+ 
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+ 
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+ 
+
+.footer-glass.bg-light {
+  background-color: var(--color-hueso) !important;
+  border-top-color: var(--color-borde) !important;
+}
+ 
+
+.info-card {
+  background-color: var(--color-hueso-card);
+  border: 1px solid var(--color-borde);
+  border-radius: 0.75rem;
+  height: 100%;
+}
+ 
+.info-card .icon-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: rgba(157, 0, 255, 0.1);
+  color: var(--color-morado);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.auth-shell {
+  display: flex;
+  min-height: 80vh;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.auth-card-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  min-height: 520px;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 1rem 3rem rgba(26, 0, 51, 0.25);
+  background-color: var(--color-hueso-card);
+}
+
+.auth-welcome-panel {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-morado-oscuro) 0%, var(--color-morado) 100%);
+  animation: deslizarPanelIzquierda 0.9s ease-in-out 1.4s forwards;
+}
+
+.auth-welcome-panel h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  opacity: 0;
+  animation: aparecerTexto 0.6s ease-out 0.3s forwards;
+}
+
+.auth-welcome-panel p {
+  opacity: 0;
+  color: rgba(255, 255, 255, 0.85);
+  animation: aparecerTexto 0.6s ease-out 0.6s forwards;
+}
+
+.auth-welcome-panel i.fa-hotel {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: aparecerTexto 0.6s ease-out 0.1s forwards;
+}
+
+.auth-form-side {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  height: 100%;
+  min-height: 520px;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 2rem;
+  opacity: 0;
+  animation: aparecerTexto 0.6s ease-out 1.8s forwards;
+}
+
+@keyframes deslizarPanelIzquierda {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+    visibility: hidden;
+  }
+}
+
+@keyframes aparecerTexto {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-form-card {
+  width: 100%;
+  max-width: 380px;
+}
+
+.auth-links {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+#welcomeOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-morado-oscuro) 0%, var(--color-morado) 100%);
+}
+
+#welcomeOverlay.animar {
+  animation: deslizarPanelIzquierda 0.9s ease-in-out 1.1s forwards;
+}
+
+#welcomeOverlay h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 2.25rem;
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  animation: aparecerTexto 0.6s ease-out 0.2s forwards;
+}
+
+#welcomeOverlay p {
+  opacity: 0;
+  color: rgba(255, 255, 255, 0.85);
+  animation: aparecerTexto 0.6s ease-out 0.45s forwards;
+}
+
+#welcomeOverlay i.fa-hotel {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: aparecerTexto 0.6s ease-out 0s forwards;
+}

@@ -1,0 +1,12 @@
+@using Microsoft.AspNetCore.Identity
+@using Caso1.Models
+@inject SignInManager<ApplicationUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User) && TempData["MostrarBienvenida"] != null)
+{
+    <div id="welcomeOverlay" class="animar">
+        <i class="fa-solid fa-hotel"></i>
+        <h1>Bienvenido al Hotel Los Patitos</h1>
+        <p>Preparando tu experiencia...</p>
+    </div>
+}

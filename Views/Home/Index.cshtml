@@ -1,0 +1,168 @@
+@model Caso1.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="hero-panel p-4 p-lg-5 mb-4">
+    <h1 class="display-6 fw-bold mb-2">Hotel Los Patitos</h1>
+    <p class="lead mb-0">
+        Encuentra la habitación perfecta para tu estadía y gestiona tu reserva en un solo lugar.
+    </p>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="stat-card border border-primary rounded p-3 text-center shadow-sm">
+            <div class="stat-label text-muted fw-bold">Habitaciones Disponibles</div>
+            <div class="stat-value display-5 text-primary">@Model.TotalHabitaciones</div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="stat-card border border-success rounded p-3 text-center shadow-sm">
+            <div class="stat-label text-muted fw-bold">Reservaciones Totales</div>
+            <div class="stat-value display-5 text-success">@Model.TotalReservaciones</div>
+        </div>
+    </div>
+</div>
+
+<h2 class="h4 mb-3">Habitaciones disponibles ahora</h2>
+
+@if (!Model.HabitacionesDestacadas.Any())
+{
+    <p class="text-muted mb-4">No hay habitaciones disponibles en este momento.</p>
+}
+else
+{
+    <div class="row g-4 mb-4">
+        @foreach (var habitacion in Model.HabitacionesDestacadas)
+        {
+            string tipoProsa = habitacion.TipoDeHabitacion switch
+            {
+                1 => "Junior",
+                2 => "Superior",
+                3 => "Suite",
+                _ => "Desconocido"
+            };
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h3 class="h5 mb-0">@habitacion.NombreDeHabitacion</h3>
+                            <span class="badge bg-light text-primary">@tipoProsa</span>
+                        </div>
+                        <p class="text-muted small mb-3">
+                            <i class="fa-solid fa-location-dot me-1"></i>@habitacion.Ubicacion
+                        </p>
+                        <p class="fs-5 fw-bold text-primary mb-0">
+                            @habitacion.CostoDeReserva.ToString("C")
+                            <span class="fs-6 text-muted fw-normal">/ noche</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-center mb-5">
+    <a class="btn btn-primary btn-lg px-4" asp-controller="Reservacion" asp-action="Index">Reservar Habitación</a>
+</div>
+
+<h2 class="h4 mb-3">Servicios del hotel</h2>
+<div class="row g-4 mb-5">
+    <div class="col-md-3 col-6">
+        <div class="info-card p-3 text-center">
+            <div class="icon-badge mb-2 mx-auto">
+                <i class="fa-solid fa-wifi"></i>
+            </div>
+            <p class="mb-0 fw-semibold small">WiFi gratuito</p>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="info-card p-3 text-center">
+            <div class="icon-badge mb-2 mx-auto">
+                <i class="fa-solid fa-person-swimming"></i>
+            </div>
+            <p class="mb-0 fw-semibold small">Piscina</p>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="info-card p-3 text-center">
+            <div class="icon-badge mb-2 mx-auto">
+                <i class="fa-solid fa-mug-saucer"></i>
+            </div>
+            <p class="mb-0 fw-semibold small">Desayuno incluido</p>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="info-card p-3 text-center">
+            <div class="icon-badge mb-2 mx-auto">
+                <i class="fa-solid fa-square-parking"></i>
+            </div>
+            <p class="mb-0 fw-semibold small">Parqueo privado</p>
+        </div>
+    </div>
+</div>
+
+<h2 class="h4 mb-3">Lo que dicen nuestros huéspedes</h2>
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="info-card p-4">
+            <p class="mb-3">"La habitación estaba impecable y el personal muy amable. Sin duda volveré."</p>
+            <p class="fw-semibold mb-0 text-primary">— María Fernández</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="info-card p-4">
+            <p class="mb-3">"Excelente ubicación y la Suite vale cada centavo. La piscina es un plus enorme."</p>
+            <p class="fw-semibold mb-0 text-primary">— Carlos Jiménez</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="info-card p-4">
+            <p class="mb-3">"Reservar fue muy fácil y rápido. El desayuno incluido superó mis expectativas."</p>
+            <p class="fw-semibold mb-0 text-primary">— Ana Castro</p>
+        </div>
+    </div>
+</div>
+
+<h2 class="h4 mb-3">Preguntas frecuentes</h2>
+<div class="accordion mb-4" id="faqAccordion">
+    <div class="accordion-item">
+        <h3 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                ¿A qué hora son el check-in y el check-out?
+            </button>
+        </h3>
+        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+                El check-in es a partir de las 8:30 AM y el check-out hasta las 11:00 AM.
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h3 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                ¿Puedo cancelar mi reservación?
+            </button>
+        </h3>
+        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+                Sí, puedes cancelar contactando directamente con el hotel antes de la fecha de llegada.
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h3 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                ¿El costo de limpieza se cobra por noche o una sola vez?
+            </button>
+        </h3>
+        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+                El costo de limpieza se cobra una única vez por reservación, sin importar la cantidad de noches.
+            </div>
+        </div>
+    </div>
+</div>

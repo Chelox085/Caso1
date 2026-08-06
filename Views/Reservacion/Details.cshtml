@@ -1,0 +1,84 @@
+@model Caso1.ViewModels.DetallesReservaViewModel
+@{
+    ViewData["Title"] = "Detalles de la Reservación";
+}
+<div class="container py-4">
+    <div class="card shadow border-0 max-width-md mx-auto">
+        <div class="card-header bg-success text-white p-4 text-center">
+            <i class="fa-solid fa-circle-check fs-1 mb-2"></i>
+            <h2 class="mb-0">Comprobante de Reservación</h2>
+            <p class="mb-0 opacity-75">Código de Reserva: <strong>#@Model.Reservacion.Id</strong></p>
+        </div>
+        <div class="card-body p-4">
+            <h4 class="border-bottom pb-2 mb-3 text-dark fw-bold"><i class="fa-solid fa-user me-2 text-success"></i>Datos del Huésped</h4>
+            <div class="row g-3 mb-4">
+                <div class="col-sm-6">
+                    <span class="text-muted d-block small">Nombre completo</span>
+                    <strong class="text-dark fs-5">@Model.Reservacion.NombreDeLaPersona</strong>
+                </div>
+                <div class="col-sm-6">
+                    <span class="text-muted d-block small">Identificación</span>
+                    <span class="text-dark fw-semibold">@Model.Reservacion.Identificacion</span>
+                </div>
+                <div class="col-sm-6">
+                    <span class="text-muted d-block small">Teléfono</span>
+                    <span class="text-dark">@Model.Reservacion.Telefono</span>
+                </div>
+                <div class="col-sm-6">
+                    <span class="text-muted d-block small">Correo electrónico</span>
+                    <span class="text-dark">@Model.Reservacion.Correo</span>
+                </div>
+                <div class="col-sm-6">
+                    <span class="text-muted d-block small">Fecha de nacimiento</span>
+                    <span class="text-dark">@Model.Reservacion.FechaNacimiento.ToString("dd/MM/yyyy")</span>
+                </div>
+                <div class="col-sm-6">
+                    <span class="text-muted d-block small">Cantidad de personas</span>
+                    <span class="text-dark">@Model.Reservacion.CantidadDePersonas</span>
+                </div>
+                <div class="col-12">
+                    <span class="text-muted d-block small">Dirección</span>
+                    <span class="text-dark small">@Model.Reservacion.Direccion</span>
+                </div>
+            </div>
+            <h4 class="border-bottom pb-2 mb-3 text-dark fw-bold"><i class="fa-solid fa-bed me-2 text-success"></i>Detalles del Hospedaje</h4>
+            <div class="row g-3 mb-4">
+                <div class="col-sm-6">
+                    <span class="text-muted d-block small">Habitación</span>
+                    <span class="text-dark fw-semibold">@Model.Habitacion.NombreDeHabitacion (@Model.Habitacion.CodigoDeHabitacion)</span>
+                </div>
+                <div class="col-sm-6">
+                    <span class="text-muted d-block small">Tipo de Habitación</span>
+                    <span class="badge bg-secondary">@Model.TipoDeHabitacionProsa</span>
+                </div>
+                <div class="col-sm-6">
+                    <span class="text-muted d-block small">Capacidad</span>
+                    <span class="text-dark">Max @Model.Habitacion.CantidadDeHuespedesPermitidos Personas</span>
+                </div>
+                <div class="col-sm-6">
+                    <span class="text-muted d-block small">Fecha de Reservación</span>
+                    <span class="text-muted small">Registrado el @Model.Reservacion.FechaDeRegistro.ToString("g")</span>
+                </div>
+            </div>
+            <h4 class="border-bottom pb-2 mb-3 text-dark fw-bold"><i class="fa-solid fa-receipt me-2 text-success"></i>Desglose Financiero</h4>
+            <div class="bg-light p-3 rounded-3 mb-4">
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-secondary">Fecha de Entrada:</span>
+                    <strong class="text-dark">@Model.Reservacion.FechaInicioReserva.ToString("dd/MMM/yyyy")</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-secondary">Fecha de Salida:</span>
+                    <strong class="text-dark">@Model.Reservacion.FechaFinReserva.ToString("dd/MMM/yyyy")</strong>
+                </div>
+                <hr />
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <span class="fs-5 fw-bold text-dark">Monto Total Cobrado:</span>
+                    <span class="fs-3 fw-bold text-success">@Model.Reservacion.MontoTotal.ToString("C")</span>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <a asp-action="Index" class="btn btn-outline-success px-4">Realizar Otra Consulta</a>
+            </div>
+        </div>
+    </div>
+</div>

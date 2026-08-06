@@ -1,0 +1,157 @@
+@model Caso1.ViewModels.BusquedaReservaViewModel
+@{
+    ViewData["Title"] = "Buscar Habitaciones";
+}
+<div class="row justify-content-center mb-5">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0 bg-white p-4 rounded-3 border-start border-primary border-4">
+            <h5 class="card-title text-muted mb-3"><i class="fa-solid fa-magnifying-glass me-2"></i>¿Ya tienes una reservación?</h5>
+            <div class="row g-2">
+                <div class="col">
+                    <input type="number" id="idReservacionInput" class="form-control form-control-lg" placeholder="Digita tu número de reservación (Id)..." min="1" />
+                </div>
+                <div class="col-auto">
+                    <button type="button" id="btnBuscarReserva" class="btn btn-primary btn-lg px-4">Buscar Código</button>
+                </div>
+            </div>
+            <div id="mensajeErrorBusqueda" class="alert alert-danger mt-3 mb-0 d-none">
+                <i class="fa-solid fa-circle-exclamation fs-5 me-2"></i>
+                <span>Estimado usuario, no se ha encontrado la reserva, favor realice una.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDetallesReserva" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalles de la Reservación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="contenidoModalReserva">
+                <div class="text-center py-4"><i class="fa-solid fa-spinner fa-spin"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center mb-4">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0"><i class="fa-solid fa-calendar-check me-2"></i>Buscar Disponibilidad de Habitaciones</h4>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Index" method="post" class="row g-3">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="col-md-5">
+                        <label asp-for="FechaInicio" class="form-label fw-bold">Fecha de Entrada</label>
+                        <input asp-for="FechaInicio" class="form-control" type="date" />
+                        <span asp-validation-for="FechaInicio" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-5">
+                        <label asp-for="FechaFin" class="form-label fw-bold">Fecha de Salida</label>
+                        <input asp-for="FechaFin" class="form-control" type="date" />
+                        <span asp-validation-for="FechaFin" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-success w-100 fw-bold">BUSCAR</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@if (Context.Request.Method == "POST")
+{
+    <hr class="my-5" />
+    <h3 class="mb-4 text-center fw-bold text-dark">Habitaciones Disponibles para estas Fechas</h3>
+    @if (!Model.HabitacionesDisponibles.Any())
+    {
+        <div class="alert alert-warning text-center p-4 shadow-sm">
+            <i class="fa-solid fa-face-frown fs-1 mb-3 text-warning"></i>
+            <h5>No hay disponibilidad</h5>
+            <p class="mb-0 text-muted">Intenta con otro rango de fechas para tu estadía.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var habitacion in Model.HabitacionesDisponibles)
+            {
+                string tipoProsa = habitacion.TipoDeHabitacion switch
+                {
+                    1 => "Junior",
+                    2 => "Superior",
+                    3 => "Suite",
+                    _ => "Desconocido"
+                };
+
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-light">
+                        <div class="card-header fw-bold text-white text-center" style="background-color: var(--color-morado);">
+                            <span>Disponible</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h5 class="card-title fw-bold mb-0">@habitacion.NombreDeHabitacion</h5>
+                                <span class="badge bg-light text-primary">@tipoProsa</span>
+                            </div>
+                            <p class="card-text text-muted small mt-2"><i class="fa-solid fa-location-dot me-1"></i>@habitacion.Ubicacion</p>
+
+                            <ul class="list-unstyled my-3 bg-light p-2 rounded text-secondary small">
+                                <li class="mb-1"><i class="fa-solid fa-users me-2"></i>Máx: @habitacion.CantidadDeHuespedesPermitidos personas</li>
+                                <li class="mb-1"><i class="fa-solid fa-bed me-2"></i>Camas: @habitacion.CantidadDeCamas</li>
+                                <li><i class="fa-solid fa-shower me-2"></i>Baños: @habitacion.CantidadDeBanos</li>
+                            </ul>
+
+                            <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                                <div>
+                                    <span class="d-block small text-muted">Por noche</span>
+                                    <span class="fs-5 fw-bold text-primary">@habitacion.CostoDeReserva.ToString("C")</span>
+                                </div>
+                                <a asp-action="Create"
+                                   asp-route-idHabitacion="@habitacion.Id"
+                                   asp-route-fechaInicio="@Model.FechaInicio.ToString("yyyy-MM-dd")"
+                                   asp-route-fechaFin="@Model.FechaFin.ToString("yyyy-MM-dd")"
+                                   class="btn btn-sm btn-success px-3 fw-bold">
+                                   Reservar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('btnBuscarReserva').addEventListener('click', function () {
+            const id = document.getElementById('idReservacionInput').value;
+            const errorBox = document.getElementById('mensajeErrorBusqueda');
+            errorBox.classList.add('d-none');
+
+            if (!id) return;
+
+            fetch('/Reservacion/BuscarReserva?idReservacion=' + id)
+                .then(response => {
+                    if (!response.ok) throw new Error('No encontrado');
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById('contenidoModalReserva').innerHTML = html;
+                    new bootstrap.Modal(document.getElementById('modalDetallesReserva')).show();
+                })
+                .catch(() => {
+                    errorBox.classList.remove('d-none');
+                });
+        });
+    </script>
+}

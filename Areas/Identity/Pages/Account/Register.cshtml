@@ -1,0 +1,65 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Crear cuenta";
+}
+
+<div class="auth-shell">
+    <div class="auth-card-wrap">
+        <div class="auth-welcome-panel">
+            <i class="fa-solid fa-hotel"></i>
+            <h1>Bienvenido al Hotel Los Patitos</h1>
+            <p>Regístrate para reservar tu habitación en minutos</p>
+        </div>
+        <div class="auth-form-side">
+            <div class="auth-form-card">
+                <h1 class="h4 mb-1">Crear cuenta</h1>
+                <p class="text-muted small mb-4">Regístrate para reservar tu habitación.</p>
+
+                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger small" role="alert"></div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="nombre@ejemplo.com" />
+                        <label asp-for="Input.Email">Correo electrónico</label>
+                        <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Contraseña" />
+                        <label asp-for="Input.Password">Contraseña</label>
+                        <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Confirmar contraseña" />
+                        <label asp-for="Input.ConfirmPassword">Confirmar contraseña</label>
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold d-block">Selecciona tu rol</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="Input.Rol" id="rol-admin" value="Administrador" />
+                            <label class="form-check-label" for="rol-admin">Administrador</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="Input.Rol" id="rol-cliente" value="Cliente" />
+                            <label class="form-check-label" for="rol-cliente">Cliente</label>
+                        </div>
+                        <span asp-validation-for="Input.Rol" class="text-danger small d-block"></span>
+                    </div>
+
+                    <button id="registerSubmit" type="submit" class="w-100 btn btn-primary btn-lg">Crear cuenta</button>
+                </form>
+
+                <div class="auth-links">
+                    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">¿Ya tienes cuenta? Inicia sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
