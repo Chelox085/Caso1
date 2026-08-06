@@ -401,3 +401,4 @@
 /Users/marceloquevedo/Downloads/Caso1/obj/Debug/net9.0/compressed/v0zgfp0y55-{0}-87fc7y1x7t-87fc7y1x7t.gz
 /Users/marceloquevedo/Downloads/Caso1/obj/Debug/net9.0/compressed/yfc7ypekbg-{0}-mlv21k5csn-mlv21k5csn.gz
 /Users/marceloquevedo/Downloads/Caso1/obj/Debug/net9.0/compressed/trael3cqqa-{0}-gpuf0ys6ul-gpuf0ys6ul.gz
+/Users/marceloquevedo/Downloads/Caso1/obj/Debug/net9.0/Caso1.sourcelink.json

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Caso1.Controllers;
 
-[Authorize(Roles = "Cliente")]
+[Authorize]
 public class ReservacionController : Controller
 {
     private readonly Caso1Context _context;
@@ -18,12 +18,14 @@ public class ReservacionController : Controller
         _context = context;
     }
 
+    [Authorize(Roles = "Cliente")]
     [HttpGet]
     public IActionResult Index()
     {
         return View(new BusquedaReservaViewModel());
     }
 
+    [Authorize(Roles = "Cliente")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Index(BusquedaReservaViewModel model)
@@ -45,6 +47,7 @@ public class ReservacionController : Controller
         return View(model);
     }
 
+    [Authorize(Roles = "Cliente")]
     [HttpGet]
     public async Task<IActionResult> BuscarReserva(int idReservacion)
     {
@@ -75,6 +78,7 @@ public class ReservacionController : Controller
         return PartialView("DetailsPartial", viewModel);
     }
 
+    [Authorize(Roles = "Cliente")]
     [HttpGet]
     public async Task<IActionResult> Create(int idHabitacion, DateTime fechaInicio, DateTime fechaFin)
     {
@@ -99,6 +103,7 @@ public class ReservacionController : Controller
         return View(viewModel);
     }
 
+    [Authorize(Roles = "Cliente")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(FormularioReservaViewModel viewModel)
@@ -109,7 +114,6 @@ public class ReservacionController : Controller
         {
             viewModel.NuevaReserva.FechaDeRegistro = DateTime.Now;
             viewModel.NuevaReserva.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             _context.Add(viewModel.NuevaReserva);
             await _context.SaveChangesAsync();
 
@@ -124,11 +128,11 @@ public class ReservacionController : Controller
         return View(viewModel);
     }
 
+    [Authorize(Roles = "Cliente")]
     [HttpGet]
     public async Task<IActionResult> Details(int idReservacion)
     {
         var reservacion = await _context.Reservaciones.FindAsync(idReservacion);
-
         if (reservacion == null)
         {
             TempData["ErrorMessage"] = "Estimado usuario, no se ha encontrado la reservación, favor realice una.";
